@@ -1,0 +1,16 @@
+{
+  "name": "webrtclab",
+  "version": "1.0.0",
+  "description": "Playground to practice webRTC features",
+  "scripts": {
+    "start": "node ./src/server/server.js",
+    "build-client": "tsc --p ./src/client"
+  },
+  "type": "module",
+  "author": "puresmash",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "typescript": "^5.4.5"
+  }
+}
