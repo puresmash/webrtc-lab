@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "module": "ES2020",
+    "module": "CommonJS",
     "target": "ES2020",
+    "esModuleInterop": true,
     "rootDir": "",
-    "outDir": "../../dist/public/scripts"
+    "outDir": "../../dist"
   },
   "include": ["*.ts"],
   "exclude": ["node_modules"]
