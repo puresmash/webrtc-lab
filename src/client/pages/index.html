@@ -1,7 +1,29 @@
 <html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        overflow: hidden;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+      .pc {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+    </style>
+  </head>
   <body>
-    <video id="local-video" style="transform: scaleX(-1)" autoplay muted></video>
-    <video id="remote-video" style="transform: scaleX(-1)" autoplay></video>
-    <script type="module" src="./scripts/index.js"></script>
+    <div class="pc">
+      <span>PC1</span>
+      <iframe src="chat.html?name=pc1"></iframe>
+    </div>
+    <div class="pc">
+      <span>PC2</span>
+      <iframe src="chat.html?name=pc2"></iframe>
+    </div>
   </body>
 </html>

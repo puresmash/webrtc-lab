@@ -4,16 +4,21 @@
   "description": "Playground to practice webRTC features",
   "scripts": {
     "start": "node ./dist/server.js",
-    "build-client": "tsc --p ./src/client && cp -r src/client/pages/. dist/public",
+    "start-ws-server": "ts-node src/server/wss.ts",
+    "build-client": "sh build-client.sh",
     "build-server": "tsc --p ./src/server"
   },
   "author": "puresmash",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
-    "typescript": "^5.4.5"
+    "@types/ws": "^8.5.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "wscat": "^5.2.0"
   }
 }
