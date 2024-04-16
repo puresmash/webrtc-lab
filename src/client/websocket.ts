@@ -11,7 +11,7 @@ export function createWebSocketConnection(username: string, localPc: RTCPeerConn
   });
   conn.addEventListener('message', async (message) => {
     const data = JSON.parse(message.data);
-    console.log(data);
+    console.log('Received websocket message', data);
     if (data.candidate) {
       console.log('get candidate', data.candidate);
       localPc.addIceCandidate(new RTCIceCandidate(data.candidate));
@@ -20,9 +20,9 @@ export function createWebSocketConnection(username: string, localPc: RTCPeerConn
       localPc.setRemoteDescription(data.answer);
     } else if (data.offer) {
       console.log('get sdp offer', data.offer);
-      localPc.setRemoteDescription(data.offer);
+      await localPc.setRemoteDescription(data.offer);
       const remoteSDP = await answerSDP(localPc, data.offer);
-      sendWsMessage({ type: 'answer',to: data.from, answer: remoteSDP });
+      sendWsMessage({ type: 'answer', to: data.from, answer: remoteSDP });
     }
   });
   return sendWsMessage;
