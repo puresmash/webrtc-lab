@@ -1,8 +1,18 @@
 <html>
+  <head>
+    <style>
+      video {
+        border: 1px solid gray;
+      }
+    </style>
+  </head>
   <body>
     <video id="local-video" style="transform: scaleX(-1)" autoplay muted></video>
     <video id="remote-video" style="transform: scaleX(-1)" autoplay></video>
-    <button id="call">Call</button>
+    <div>
+      <button id="call">Call</button>
+      <button id="send-text">Say Hello</button>
+    </div>
     <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>

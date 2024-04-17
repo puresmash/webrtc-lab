@@ -37,3 +37,39 @@ export async function answerSDP(pc: RTCPeerConnection, remoteSDP) {
   await pc.setLocalDescription(localSDP);
   return localSDP;
 }
+
+export function createDataChannel(label: string, peerConnection: RTCPeerConnection) {
+  const options: RTCDataChannelInit = {
+    ordered: true,
+  };
+  const dataChannel = peerConnection.createDataChannel(label, options);
+  function handleChannelStatusChange() {
+    if (dataChannel) {
+      const state = dataChannel.readyState;
+      if (state === 'open') {
+        console.log('Data channel opened');
+      } else {
+        console.log('Data channel closed');
+      }
+    }
+  }
+  dataChannel.addEventListener('open', handleChannelStatusChange);
+  dataChannel.addEventListener('close', handleChannelStatusChange);
+  dataChannel.addEventListener('error', (error) => console.error(error));
+  dataChannel.addEventListener('message', (event) => console.log(`Received: ${event.data}`));
+  
+  return function sendMessage(message: string) {
+    if (dataChannel && dataChannel.readyState === 'open') {
+      dataChannel.send(message);
+    } else {
+      console.warn('Data channel has been closed or not established yet');
+    }
+  }
+}
+
+export function allowRecvChannel(peerConnection: RTCPeerConnection) {
+  peerConnection.addEventListener('datachannel', (event) => {
+    const recvChannel = event.channel;
+    recvChannel.addEventListener('message', (event) => console.log('recv', event.data));
+  });
+}

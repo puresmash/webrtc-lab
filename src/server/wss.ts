@@ -4,6 +4,7 @@ import type { WsInboundMessage } from './websocket';
 import { logoutUser } from './service/userService';
 import { COMMAND } from './websocket/constant';
 
+// TODO, merge the express server with the signaling server?
 const wss = new WebSocketServer({ port: 8080 });
 
 wss.on('connection', function connection(ws) {

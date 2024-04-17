@@ -17,8 +17,13 @@ export async function remoteVideoStream() {
   const sendWsMessage = createWebSocketConnection(username, localPc);
   // Deal with the local video stream
   const localVideoElement = document.querySelector('#local-video') as HTMLVideoElement;
-  const addTrack = await handleLocalVideoStream(localVideoElement);
-  addTrack(localPc);
+  try {
+    const addTrack = await handleLocalVideoStream(localVideoElement);
+    addTrack(localPc);
+  } catch (error) {
+    // If local camera isn't successfully running, still allow chatting by text
+    console.error(error);
+  }
   // Find the ice candidate path
   registerIceHandler(localPc, async (candidate) => sendWsMessage({ type: 'candidate', to: findCounterPart(username), candidate }));
   const remoteVideoElement = document.querySelector('#remote-video') as HTMLVideoElement;
@@ -31,4 +36,5 @@ export async function remoteVideoStream() {
     console.log('localSDP', localSDP);
     sendWsMessage({ type: 'offer', from: username, to: findCounterPart(username), offer: localSDP });
   });
+  return localPc;
 }
